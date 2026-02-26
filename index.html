@@ -294,30 +294,33 @@
       </p>
     </section>
     <section id="setup">
-      <h2>Lab setup photos</h2>
-      <p class="muted">
-        Add one or more photos of the experimental setup (system overview, sensor placement, and acquisition devices).
-      </p>
+  <h2>Lab setup</h2>
+  <p class="muted">
+    Experimental platform and sensor configuration used for SSCC data acquisition.
+  </p>
 
-      <!-- Replace src with your actual image path/URL. For GitHub Pages, a common choice is ./assets/lab_setup.jpg -->
-      <div class="photowrap">
-        <img src="TODO: lab_photo_1" alt="SSCC lab setup photo" />
-        <div class="caption">Figure: Laboratory single-speed chain conveyor setup and sensor placement (SSCC v1.0).</div>
-      </div>
+  <!-- Real lab photo -->
+  <div class="photowrap">
+    <img src="assets/lab_photo.jpg" alt="SSCC laboratory setup" />
+    <div class="caption">
+      Fig. 1. Physical single-speed chain conveyor system overview.
+    </div>
+  </div>
 
-      <!-- Optional second photo -->
-      <div class="photowrap" style="margin-top:12px;">
-        <img src="TODO: lab_photo_2" alt="SSCC sensors and recording devices" />
-        <div class="caption">Figure: Audio devices (3 channels) and vibration sensors (4 channels) used for synchronized acquisition.</div>
-      </div>
-    </section>
+  <!-- Top-view system layout -->
+  <div class="photowrap" style="margin-top:14px;">
+    <img src="assets/system_layout.jpg" alt="System layout top view" />
+    <div class="caption">
+      Fig. 2. Top-view schematic of the system layout, sensor configuration, and noise playback setup.
+    </div>
+  </div>
+</section>
 
     <section id="spec">
       <h2>Data specification</h2>
       <ul class="list">
        <li>
-Recording setup: The overall sensor placement and system layout are illustrated in Fig. 2.
-Audio is captured using three devices: Zoom H5 (WAV, 44.1 kHz), iPhone 11 (MP4, 44.1 kHz),
+Recording setup: Audio is captured using three devices: Zoom H5 (WAV, 44.1 kHz), iPhone 11 (MP4, 44.1 kHz),
 and Xiaomi Mi 9 SE (MP4, 48 kHz). Vibration signals are acquired using one single-axis
 sensor and one tri-axis sensor (four channels total) sampled at 100 kHz (CSV format).
 Two loudspeakers are used to replay real factory noise recordings to simulate realistic
