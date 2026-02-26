@@ -215,6 +215,33 @@
       color:var(--muted);
       font-size:13px;
     }
+    .filetree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+}
+
+.filetree li {
+  margin: 6px 0;
+  padding-left: 10px;
+  position: relative;
+  color: var(--muted);
+}
+
+.filetree li::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 12px;
+  width: 10px;
+  height: 1px;
+  background: var(--line);
+}
+
+.filetree strong {
+  color: var(--text);
+}
   </style>
 </head>
 
@@ -301,7 +328,7 @@
 
   <!-- Real lab photo -->
   <div class="photowrap">
-    <img src="assets/lab_photo.jpg" alt="SSCC laboratory setup" />
+    <img src="assets/lab_setup.jpg" alt="SSCC laboratory setup" />
     <div class="caption">
       Fig. 1. Physical single-speed chain conveyor system overview.
     </div>
@@ -564,41 +591,33 @@ environmental noise conditions. Only audio tracks are used from mobile recording
         </table>
       </div>
 
-      <div class="codeblock">
-# Directory layout (SSCC v1.0)
-ASDdataset/
-  README.md
-  metadata.csv
-  normal/
-    heavy_vel40_clean/
-      android/
-        android_part_0001.mp4
-        ...
-      ios/
-        ios_part_0001.mp4
-        ...
-      audio/
-        audio_part_0001.wav
-        ...
-      vibration/
-        vib_part_0001.csv
-        ...
-    heavy_vel60_noise/
-      android/...
-      ios/...
-      audio/...
-      vibration/...
-    ...
-  dry/              # abnormal
-    heavy_vel60_clean/...
-    heavy_vel60_noise/...
-    ...
-  lean/             # abnormal
-    ...
-  loose/            # abnormal
-    ...
-  screwdrop/        # abnormal
-    ...
+<div class="filetree">
+  <ul>
+    <li><strong>ASDdataset/</strong>
+      <ul>
+        <li>README.md</li>
+        <li>metadata.csv</li>
+        <li><strong>normal/</strong>
+          <ul>
+            <li><strong>heavy_vel40_clean/</strong>
+              <ul>
+                <li>android/</li>
+                <li>ios/</li>
+                <li>audio/</li>
+                <li>vibration/</li>
+              </ul>
+            </li>
+            <li>heavy_vel60_noise/</li>
+            <li>...</li>
+          </ul>
+        </li>
+        <li><strong>dry/</strong> (abnormal)</li>
+        <li><strong>lean/</strong> (abnormal)</li>
+        <li><strong>loose/</strong> (abnormal)</li>
+        <li><strong>screwdrop/</strong> (abnormal)</li>
+      </ul>
+    </li>
+  </ul>
 </div>
     </section>
 
