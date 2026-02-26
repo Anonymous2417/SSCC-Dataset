@@ -293,16 +293,28 @@
         SSCC is designed to support both fault detection (normal vs abnormal) and multi-class fault classification, enabling research on multimodal representation learning and fusion under realistic domain shifts.
       </p>
     </section>
-
+    <div class="photowrap">
+  <img src="assets/setup_overview.jpg" alt="System layout and sensor configuration">
+  <div class="caption">
+    Fig. 2. Overall system layout, sensor configuration, and noise playback setup.
+  </div>
+</div>
     <section id="spec">
       <h2>Data specification</h2>
       <p class="muted">Exact, reproducible details about recording, annotation, and organization.</p>
       <ul class="list">
-        <li>Recording setup: TODO (devices, placement, sampling rates, synchronization).</li>
-        <li>Segmentation: TODO (clip length, overlap, steady-state criteria).</li>
+       <li>
+Recording setup: The overall sensor placement and system layout are illustrated in Fig. 2.
+Audio is captured using three devices: Zoom H5 (WAV, 44.1 kHz), iPhone 11 (MP4, 44.1 kHz),
+and Xiaomi Mi 9 SE (MP4, 48 kHz). Vibration signals are acquired using one single-axis
+sensor and one tri-axis sensor (four channels total) sampled at 100 kHz (CSV format).
+Two loudspeakers are used to replay real factory noise recordings to simulate realistic
+environmental noise conditions. Only audio tracks are used from mobile recordings.
+</li>
+        <li>Segmentation: Data are collected under steady-state operating conditions and segmented into fixed-length clips (5 seconds per clip). No temporal overlap is applied between adjacent segments. All seven channels corresponding to the same time window are treated as synchronized modalities of a single sample.</li>
         <li>Labels/attributes: normal + 4 fault types; operating attributes (speed, load, noise).</li>
         <li>Splits: fault detection uses normal vs abnormal; fault classification uses separate multi-class splits.</li>
-        <li>File structure: audio/ vibration/ metadata.csv / splits/.</li>
+        <li>File structure: ASDdataset/{normal|fault_type}/{condition}/{android|ios|audio|vibration}/</li>
       </ul>
 
       <h3 style="margin:12px 0 6px; font-size:16px;">Dataset composition (clips)</h3>
