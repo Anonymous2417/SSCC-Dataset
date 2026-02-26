@@ -594,9 +594,6 @@ environmental noise conditions. Only audio tracks are used from mobile recording
   <ul>
     <li><strong>ASDdataset/</strong>
       <ul>
-        <li>README.md</li>
-        <li>metadata.csv</li>
-
         <li><strong>normal/</strong>
           <ul>
             <li><strong>heavy_vel40_clean/</strong>
@@ -643,37 +640,31 @@ environmental noise conditions. Only audio tracks are used from mobile recording
       </ul>
     </section>
 
-    <section id="benchmark">
-      <h2>Benchmark</h2>
-      <p class="muted">
-        We provide two benchmark tracks with task-specific splits and evaluation protocols. Code is available at:
-        <a href="TODO: code_available_link" target="_blank" rel="noopener">this repository</a>.
-      </p>
+<section id="benchmark">
+  <h2>Benchmark</h2>
+  <p class="muted">
+    We provide two benchmark tracks with task-specific condition-level splits and unified evaluation protocols.
+    All partitions are performed at the condition level to prevent data leakage, ensuring that signal segments
+    from the same operating condition are assigned exclusively to either training or testing.
+  </p>
 
-      <h3 style="margin:12px 0 6px; font-size:16px;">Fault detection (normal vs abnormal)</h3>
-      <p class="muted" style="margin:0 0 8px;">
-        Train on normal clips only. Evaluate on a mixed test set containing both normal and abnormal clips.
-      </p>
-      <div class="codeblock">
-# Fault detection (example)
-python -m pip install -r requirements.txt
-python run_detection.py --data ./dataset_root \
-  --train_split ./dataset_root/splits/detection_train.txt \
-  --test_split  ./dataset_root/splits/detection_test.txt
-      </div>
+  <h3 style="margin:12px 0 6px; font-size:16px;">Fault Detection (Anomaly Detection)</h3>
+  <p class="muted" style="margin:0 0 8px;">
+    The fault detection track follows a normal-only training paradigm. Models are trained exclusively
+    on normal samples collected under a designated target velocity, while testing is conducted on
+    a mixed set containing both normal and abnormal samples across multiple velocities.
+    This design establishes a zero-shot split with respect to operating velocity, requiring models
+    to generalize to previously unseen operating regimes and fault conditions.
+  </p>
 
-      <h3 style="margin:12px 0 6px; font-size:16px;">Fault classification (multi-class)</h3>
-      <p class="muted" style="margin:0 0 8px;">
-        Use a dedicated split for multi-class classification (normal + fault types, or fault-only depending on your setup).
-      </p>
-      <div class="codeblock">
-# Fault classification (example)
-python -m pip install -r requirements.txt
-python run_classification.py --data ./dataset_root \
-  --train_split ./dataset_root/splits/classification_train.txt \
-  --test_split  ./dataset_root/splits/classification_test.txt
-      </div>
-    </section>
+  <h3 style="margin:12px 0 6px; font-size:16px;">Fault Classification (Multi-class Diagnosis)</h3>
+  <p class="muted" style="margin:0 0 8px;">
+    The fault classification track focuses on supervised multi-class diagnosis. Selected fault
+    categories are included in training under designated velocity settings, while evaluation is
+    performed on the same fault categories under unseen velocities. This setup evaluates
+    cross-velocity generalization in a controlled supervised setting.
+  </p>
+</section>
 
     <section id="citation">
       <h2>Citation</h2>
