@@ -644,26 +644,25 @@ environmental noise conditions. Only audio tracks are used from mobile recording
   <h2>Benchmark</h2>
   <p class="muted">
     We provide two benchmark tracks with task-specific condition-level splits and unified evaluation protocols.
-    All partitions are performed at the condition level to prevent data leakage, ensuring that signal segments
-    from the same operating condition are assigned exclusively to either training or testing.
+    All partitions are performed at the condition level.
   </p>
 
-  <h3 style="margin:12px 0 6px; font-size:16px;">Fault Detection (Anomaly Detection)</h3>
-  <p class="muted" style="margin:0 0 8px;">
-    The fault detection track follows a normal-only training paradigm. Models are trained exclusively
-    on normal samples collected under a designated target velocity, while testing is conducted on
-    a mixed set containing both normal and abnormal samples across multiple velocities.
-    This design establishes a zero-shot split with respect to operating velocity, requiring models
-    to generalize to previously unseen operating regimes and fault conditions.
-  </p>
+<h3 style="margin:12px 0 6px; font-size:16px;">Fault Detection </h3>
+<p class="muted" style="margin:0 0 8px;">
+  The fault detection track follows a normal-only training paradigm. Models are trained exclusively
+  on normal samples collected under a designated target velocity (vel=100), including all load levels
+  (heavy, medium, light) and both clean and noise settings. No abnormal samples are included in training.
+  Testing is conducted on a mixed set containing (i) normal samples from the remaining velocities
+  (20, 40, 60, 80) and (ii) all abnormal samples across all velocities and load conditions.
+</p>
 
-  <h3 style="margin:12px 0 6px; font-size:16px;">Fault Classification (Multi-class Diagnosis)</h3>
-  <p class="muted" style="margin:0 0 8px;">
-    The fault classification track focuses on supervised multi-class diagnosis. Selected fault
-    categories are included in training under designated velocity settings, while evaluation is
-    performed on the same fault categories under unseen velocities. This setup evaluates
-    cross-velocity generalization in a controlled supervised setting.
-  </p>
+<h3 style="margin:12px 0 6px; font-size:16px;">Fault Classification </h3>
+<p class="muted" style="margin:0 0 8px;">
+  The fault classification track is formulated as a supervised multi-class classification task.
+  All samples collected at velocity 80 are held out from training. Moreover, samples belonging to selected fault
+  categories (dry and lean) under velocity 100 are removed from the training set
+  and reassigned to the testing set.
+</p>
 </section>
 
     <section id="citation">
