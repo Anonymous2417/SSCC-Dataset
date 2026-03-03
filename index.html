@@ -1,836 +1,122 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="SSCC dataset landing page" />
-  <title>SSCC Dataset</title>
-  <style>
-    :root{
-      --bg:#0b0f17;
-      --panel:#101826;
-      --panel2:#0e1522;
-      --text:#e6e9ef;
-      --muted:#a6b0c3;
-      --line:rgba(255,255,255,.10);
-      --accent:#7aa2ff;
-      --accent2:#72f1b8;
-      --warn:#ffd56a;
-      --shadow:0 12px 30px rgba(0,0,0,.35);
-      --radius:16px;
-      --max:1040px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 20% 10%, rgba(122,162,255,.25), transparent 55%),
-        radial-gradient(900px 600px at 90% 0%, rgba(114,241,184,.14), transparent 55%),
-        radial-gradient(900px 700px at 50% 120%, rgba(255,213,106,.10), transparent 55%),
-        var(--bg);
-      line-height:1.55;
-    }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 60px}
-    .nav{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(10px);
-      background: rgba(11,15,23,.62);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav-inner{
-      max-width:var(--max); margin:0 auto; padding:12px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .brand{display:flex; align-items:center; gap:10px; font-weight:650; letter-spacing:.2px}
-    .dot{width:10px; height:10px; border-radius:50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 0 0 3px rgba(122,162,255,.15)}
-    .links{display:flex; flex-wrap:wrap; gap:14px; font-size:14px; color:var(--muted)}
-    .links a{color:var(--muted)}
-    .links a:hover{color:var(--text); text-decoration:none}
-    .hero{
-      margin-top:24px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(16,24,38,.72), rgba(14,21,34,.65));
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:22px;
-      overflow:hidden;
-      position:relative;
-    }
-    .hero::before{
-      content:"";
-      position:absolute; inset:-80px -80px auto auto;
-      width:280px; height:280px;
-      background: radial-gradient(circle at 30% 30%, rgba(122,162,255,.35), transparent 60%);
-      transform: rotate(18deg);
-      pointer-events:none;
-    }
-    .title{font-size:34px; margin:2px 0 6px; letter-spacing:.2px}
-    .subtitle{margin:0; color:var(--muted); max-width:78ch}
-    .cta{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:16px;
-    }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--text);
-      font-weight:600;
-    }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(122,162,255,.30), rgba(114,241,184,.18));
-      border-color: rgba(122,162,255,.35);
-    }
-    .btn:hover{transform: translateY(-1px); transition:.12s ease}
-    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
-    .pill{
-      font-size:12px;
-      color:var(--muted);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
-      padding:6px 10px;
-      border-radius:999px;
-      white-space:nowrap;
-    }
-    .grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-    }
-    .card{
-      grid-column: span 6;
-      border:1px solid var(--line);
-      background: rgba(16,24,38,.60);
-      border-radius:var(--radius);
-      padding:16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.22);
-    }
-    .card h2{margin:0 0 8px; font-size:18px}
-    .card p{margin:0; color:var(--muted)}
-    .card .kv{margin-top:10px; color:var(--text)}
-    .kv span{color:var(--muted)}
-    section{
-      margin-top:22px;
-      border:1px solid var(--line);
-      background: rgba(16,24,38,.55);
-      border-radius:var(--radius);
-      padding:18px;
-    }
-    section h2{margin:0 0 10px; font-size:20px}
-    .muted{color:var(--muted)}
-    .codeblock{
-      margin-top:10px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.35);
-      border-radius:12px;
-      padding:12px;
-      overflow:auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:13px;
-      color:#dbe2f5;
-    }
-    .list{margin:8px 0 0; padding-left:18px; color:var(--muted)}
-    .footer{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:13px;
-      display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
-      padding:10px 2px 0;
-    }
-    .hr{height:1px; background:var(--line); margin:14px 0 0}
-    @media (max-width:860px){
-      .card{grid-column: span 12}
-      .title{font-size:28px}
-    }
-
-    /* ---- table styles (dataset composition) ---- */
-    .tablewrap{
-      margin-top:12px;
-      overflow:auto;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background: rgba(0,0,0,.22);
-    }
-    table.sscc{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      min-width: 980px;
-      font-size:13px;
-    }
-    table.sscc th, table.sscc td{
-      padding:8px 10px;
-      border-bottom:1px solid var(--line);
-      white-space:nowrap;
-    }
-    table.sscc thead th{
-      position:sticky;
-      top:0;
-      background: rgba(11,15,23,.92);
-      color: var(--text);
-      z-index:2;
-    }
-    table.sscc th{
-      text-align:left;
-      font-weight:650;
-    }
-    table.sscc td.num, table.sscc th.num{
-      text-align:right;
-      font-variant-numeric: tabular-nums;
-    }
-    table.sscc tbody tr:hover td{
-      background: rgba(122,162,255,.06);
-    }
-    table.sscc .group{
-      background: rgba(255,255,255,.02);
-      font-weight:650;
-    }
-    table.sscc .total{
-      font-weight:750;
-    }
-
-    /* ---- photo block ---- */
-    .photowrap{
-      margin-top:12px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background: rgba(0,0,0,.22);
-      overflow:hidden;
-    }
-    .photowrap img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
-    .caption{
-      padding:10px 12px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:13px;
-    }
-    .filetree ul {
-  list-style: none;
-  margin: 0;
-  padding-left: 18px;
-  border-left: 1px solid var(--line);
+:root{
+  /* Wider layout to reduce excessive side whitespace */
+  --max:1240px;
 }
 
-.filetree li {
-  margin: 6px 0;
-  padding-left: 10px;
-  position: relative;
-  color: var(--muted);
+/* Main page container: slightly smaller horizontal padding */
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:22px 14px 60px;
 }
 
-.filetree li::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: 12px;
-  width: 10px;
-  height: 1px;
-  background: var(--line);
+/* Sticky top navigation */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter: blur(10px);
+  background: rgba(11,15,23,.62);
+  border-bottom: 1px solid var(--line);
 }
 
-.filetree strong {
-  color: var(--text);
+/*
+  Critical fix for the “overlapping icons” issue:
+  allow the nav row to wrap on small widths.
+  Without flex-wrap, the second line can overlap the first line.
+*/
+.nav-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+
+  flex-wrap:wrap;   /* allow wrapping instead of overlapping */
+  row-gap:8px;      /* vertical spacing between wrapped rows */
 }
-  </style>
-</head>
 
-<body>
-  <div class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <span class="dot"></span>
-        <span>SSCC</span>
-      </div>
-      <div class="links">
-        <a href="#overview">Overview</a>
-        <a href="#spec">Data Spec</a>
-        <a href="#setup">Lab Setup</a>
-        <a href="#download">Download</a>
-        <a href="#benchmark">Benchmark</a>
-        <a href="#citation">Citation</a>
-        <a href="#license">License</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </div>
+/* Nav links: wrap nicely and keep readable spacing */
+.links{
+  display:flex;
+  flex-wrap:wrap;      /* links will wrap to the next line */
+  gap:10px 14px;       /* row gap + column gap */
+  font-size:14px;
+  color:var(--muted);
+  align-items:center;
+  justify-content:flex-end;
+}
 
-  <div class="wrap">
-    <header class="hero">
-      <h1 class="title">SSCC Dataset</h1>
-      <p class="subtitle">
-        A synchronized multimodal 7-channel dataset for fault detection and fault classification on a single-speed chain conveyor system.
-      </p>
+.links a{
+  color:var(--muted);
+  padding:6px 8px;              /* larger click area */
+  border-radius:10px;
+  border:1px solid transparent; /* hover outline */
+}
 
-      <div class="cta">
-        <a class="btn primary" href="TODO: download_link" target="_blank" rel="noopener">⬇ Download</a>
-        <a class="btn" href="TODO: paper_link" target="_blank" rel="noopener">📄 Paper / Preprint</a>
-        <a class="btn" href="TODO: code_link" target="_blank" rel="noopener">💻 Baselines</a>
-        <a class="btn" href="TODO: issues_link" target="_blank" rel="noopener">🧩 Issues</a>
-        <a class="btn" href="TODO: code_available_link" target="_blank" rel="noopener">🔗 Code available at</a>
-      </div>
+.links a:hover{
+  color:var(--text);
+  text-decoration:none;
+  border-color: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
 
-      <div class="pillrow">
-        <div class="pill">6,669 clips</div>
-        <div class="pill">7 synchronized channels</div>
-        <div class="pill">3 Audio (.mp4) + 4 Vibration (.csv)</div>
-        <div class="pill">Fault Detection + Fault Classification</div>
-        <div class="pill">CC BY 4.0</div>
-        <div class="pill">v1.0</div>
-      </div>
-    </header>
+/* ===== Dataset Examples: cleaner layout (less inline style) ===== */
+.examples-card{
+  margin-top:14px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background: rgba(0,0,0,.18);
+}
 
-    <div class="grid">
-      <div class="card">
-        <h2>What’s included</h2>
-        <p>Components provided in the SSCC v1.0 release.</p>
-        <div class="kv">
-          <div><span>Signals:</span> 3 audio channels (.mp4) + 4 vibration channels (.csv)</div>
-          <div><span>Metadata:</span> metadata.csv with per-clip condition annotations (speed, load, label, noise)</div>
-          <div><span>Splits:</span> Detection split (normal vs abnormal); separate splits for fault classification</div>
-        </div>
-      </div>
+.examples-title{
+  font-weight:650;
+  margin:0 0 10px;
+}
 
-      <div class="card">
-        <h2>Key features</h2>
-        <p>Core characteristics of the SSCC dataset.</p>
-        <ul class="list">
-          <li>Synchronized multimodal recordings enabling cross-modal representation learning.</li>
-          <li>Multi-condition operating settings across speed, load, fault type, and noise.</li>
-          <li>Benchmark protocols for fault analysis under distribution shift.</li>
-        </ul>
-      </div>
-    </div>
+/* 4-column grid on desktop, auto stacks on smaller screens via media query below */
+.examples-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap:12px;
+  align-items:start;
+}
 
-    <section id="overview">
-      <h2>Overview</h2>
-      <p class="muted">
-        The SSCC dataset contains synchronized audio and vibration recordings collected from a laboratory single-speed chain conveyor system under diverse operating conditions.
-        Each clip corresponds to a condition defined by conveying speed, load level, operating category (normal or fault type), and noise setting.
-        SSCC is designed to support both fault detection (normal vs abnormal) and multi-class fault classification, enabling research on multimodal representation learning and fusion under realistic domain shifts.
-      </p>
-    </section>
-    <section id="setup">
-  <h2>Lab setup</h2>
-  <p class="muted">
-    Experimental platform and sensor configuration used for SSCC data acquisition.
-  </p>
+.label{
+  font-size:13px;
+  margin:0 0 6px 0;
+  opacity:0.9;
+}
 
-  <!-- Real lab photo -->
-  <div class="photowrap">
-    <img src="assets/lab_setup.jpg" alt="SSCC laboratory setup" />
-    <div class="caption">
-      Fig. 1. Physical single-speed chain conveyor system overview.
-    </div>
-  </div>
+/* Make audio controls consistent and prevent layout glitches */
+audio{
+  display:block;
+  width:100%;
+  height:36px;
+}
 
-  <!-- Top-view system layout -->
-  <div class="photowrap" style="margin-top:14px;">
-    <img src="assets/system_layout.jpg" alt="System layout top view" />
-    <div class="caption">
-      Fig. 2. Top-view schematic of the system layout, sensor configuration, and noise playback setup.
-    </div>
-  </div>
-</section>
+/* Vibration preview image */
+.thumb{
+  width:100%;
+  height:auto;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.10);
+  display:block;
+}
 
-    <section id="spec">
-      <h2>Data specification</h2>
-      <ul class="list">
-       <li>
-Recording setup: Audio is captured using three devices: Zoom H5 (WAV, 44.1 kHz), iPhone 11 (MP4, 44.1 kHz),
-and Xiaomi Mi 9 SE (MP4, 48 kHz). Vibration signals are acquired using one single-axis
-sensor and one tri-axis sensor (four channels total) sampled at 100 kHz (CSV format).
-Two loudspeakers are used to replay real factory noise recordings to simulate realistic
-environmental noise conditions. Only audio tracks are used from mobile recordings.
-</li>
-        <li>Segmentation: Data are collected under steady-state operating conditions and segmented into fixed-length clips (5 seconds per clip). No temporal overlap is applied between adjacent segments. All seven channels corresponding to the same time window are treated as synchronized modalities of a single sample.</li>
-        <li>Labels/attributes: normal + 4 fault types; operating attributes (speed, load, noise).</li>
-        <li>Splits: fault detection uses normal vs abnormal; fault classification uses separate multi-class splits.</li>
-      </ul>
+.hint{
+  font-size:12px;
+  opacity:0.70;
+  margin-top:6px;
+}
 
-      <h3 style="margin:12px 0 6px; font-size:16px;">Dataset composition (clips)</h3>
-      <p class="muted" style="margin:0 0 8px;">
-        Clip counts by category, load, conveying speed, and noise setting.
-      </p>
-
-      <div class="tablewrap">
-        <table class="sscc" aria-label="SSCC Dataset Overview Table">
-          <thead>
-            <tr>
-              <th rowspan="2">Category</th>
-              <th rowspan="2">Load</th>
-              <th colspan="2" class="num">Velocity=20</th>
-              <th colspan="2" class="num">Velocity=40</th>
-              <th colspan="2" class="num">Velocity=60</th>
-              <th colspan="2" class="num">Velocity=80</th>
-              <th colspan="2" class="num">Velocity=100</th>
-              <th rowspan="2" class="num">Total</th>
-            </tr>
-            <tr>
-              <th class="num">clean</th><th class="num">noise</th>
-              <th class="num">clean</th><th class="num">noise</th>
-              <th class="num">clean</th><th class="num">noise</th>
-              <th class="num">clean</th><th class="num">noise</th>
-              <th class="num">clean</th><th class="num">noise</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <!-- normal -->
-            <tr>
-              <td>normal</td><td>heavy</td>
-              <td class="num">69</td><td class="num">–</td>
-              <td class="num">68</td><td class="num">–</td>
-              <td class="num">69</td><td class="num">96</td>
-              <td class="num">77</td><td class="num">97</td>
-              <td class="num">68</td><td class="num">96</td>
-              <td class="num">640</td>
-            </tr>
-            <tr>
-              <td>normal</td><td>med</td>
-              <td class="num">73</td><td class="num">–</td>
-              <td class="num">66</td><td class="num">–</td>
-              <td class="num">78</td><td class="num">96</td>
-              <td class="num">67</td><td class="num">94</td>
-              <td class="num">66</td><td class="num">99</td>
-              <td class="num">639</td>
-            </tr>
-            <tr>
-              <td>normal</td><td>light</td>
-              <td class="num">68</td><td class="num">–</td>
-              <td class="num">86</td><td class="num">–</td>
-              <td class="num">69</td><td class="num">97</td>
-              <td class="num">66</td><td class="num">97</td>
-              <td class="num">67</td><td class="num">97</td>
-              <td class="num">647</td>
-            </tr>
-            <tr class="group total">
-              <td>normal</td><td>Total</td>
-              <td class="num">210</td><td class="num">–</td>
-              <td class="num">220</td><td class="num">–</td>
-              <td class="num">216</td><td class="num">289</td>
-              <td class="num">210</td><td class="num">288</td>
-              <td class="num">201</td><td class="num">292</td>
-              <td class="num">1,926</td>
-            </tr>
-
-            <!-- dry -->
-            <tr>
-              <td>dry</td><td>heavy</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">56</td><td class="num">58</td>
-              <td class="num">342</td>
-            </tr>
-            <tr>
-              <td>dry</td><td>med</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">69</td><td class="num">57</td>
-              <td class="num">56</td><td class="num">57</td>
-              <td class="num">64</td><td class="num">56</td>
-              <td class="num">359</td>
-            </tr>
-            <tr>
-              <td>dry</td><td>light</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">62</td><td class="num">58</td>
-              <td class="num">49</td><td class="num">56</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">339</td>
-            </tr>
-            <tr class="group total">
-              <td>dry</td><td>Total</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">188</td><td class="num">172</td>
-              <td class="num">162</td><td class="num">170</td>
-              <td class="num">177</td><td class="num">171</td>
-              <td class="num">1,040</td>
-            </tr>
-
-            <!-- lean -->
-            <tr>
-              <td>lean</td><td>heavy</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">342</td>
-            </tr>
-            <tr>
-              <td>lean</td><td>med</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">58</td><td class="num">56</td>
-              <td class="num">57</td><td class="num">57</td>
-              <td class="num">56</td><td class="num">–</td>
-              <td class="num">284</td>
-            </tr>
-            <tr>
-              <td>lean</td><td>light</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">57</td><td class="num">56</td>
-              <td class="num">69</td><td class="num">60</td>
-              <td class="num">56</td><td class="num">56</td>
-              <td class="num">354</td>
-            </tr>
-            <tr class="group total">
-              <td>lean</td><td>Total</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">172</td><td class="num">169</td>
-              <td class="num">183</td><td class="num">174</td>
-              <td class="num">169</td><td class="num">113</td>
-              <td class="num">980</td>
-            </tr>
-
-            <!-- loose -->
-            <tr>
-              <td>loose</td><td>heavy</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">96</td><td class="num">99</td>
-              <td class="num">97</td><td class="num">97</td>
-              <td class="num">97</td><td class="num">96</td>
-              <td class="num">582</td>
-            </tr>
-            <tr>
-              <td>loose</td><td>med</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">73</td><td class="num">96</td>
-              <td class="num">96</td><td class="num">96</td>
-              <td class="num">96</td><td class="num">99</td>
-              <td class="num">556</td>
-            </tr>
-            <tr>
-              <td>loose</td><td>light</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">96</td><td class="num">96</td>
-              <td class="num">96</td><td class="num">96</td>
-              <td class="num">96</td><td class="num">97</td>
-              <td class="num">577</td>
-            </tr>
-            <tr class="group total">
-              <td>loose</td><td>Total</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">265</td><td class="num">291</td>
-              <td class="num">289</td><td class="num">289</td>
-              <td class="num">289</td><td class="num">292</td>
-              <td class="num">1,715</td>
-            </tr>
-
-            <!-- screwdrop -->
-            <tr>
-              <td>screwdrop</td><td>heavy</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">57</td><td class="num">56</td>
-              <td class="num">57</td><td class="num">55</td>
-              <td class="num">56</td><td class="num">54</td>
-              <td class="num">335</td>
-            </tr>
-            <tr>
-              <td>screwdrop</td><td>med</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">57</td><td class="num">47</td>
-              <td class="num">52</td><td class="num">51</td>
-              <td class="num">87</td><td class="num">54</td>
-              <td class="num">348</td>
-            </tr>
-            <tr>
-              <td>screwdrop</td><td>light</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">56</td><td class="num">56</td>
-              <td class="num">56</td><td class="num">54</td>
-              <td class="num">45</td><td class="num">56</td>
-              <td class="num">325</td>
-            </tr>
-            <tr class="group total">
-              <td>screwdrop</td><td>Total</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">–</td><td class="num">–</td>
-              <td class="num">170</td><td class="num">159</td>
-              <td class="num">165</td><td class="num">162</td>
-              <td class="num">188</td><td class="num">164</td>
-              <td class="num">1,008</td>
-            </tr>
-
-            <!-- overall -->
-            <tr class="group total">
-              <td>Overall</td><td>Total</td>
-              <td class="num">210</td><td class="num">–</td>
-              <td class="num">220</td><td class="num">–</td>
-              <td class="num">1,011</td><td class="num">1,080</td>
-              <td class="num">1,009</td><td class="num">1,083</td>
-              <td class="num">1,024</td><td class="num">1,032</td>
-              <td class="num">6,669</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-<h3 style="margin:12px 0 6px; font-size:16px;">Dataset Directory (clips)</h3>
-<div class="filetree" aria-label="SSCC directory tree">
-  <ul>
-    <li><strong>ASDdataset/</strong>
-      <ul>
-        <li><strong>normal/</strong>
-          <ul>
-            <li><strong>heavy_vel40_clean/</strong>
-              <ul>
-                <li>android/</li>
-                <li>ios/</li>
-                <li>audio/</li>
-                <li>vibration/</li>
-              </ul>
-            </li>
-            <li>heavy_vel60_noise/</li>
-            <li>...</li>
-          </ul>
-        </li>
-
-        <li><strong>abnormal/</strong>
-          <ul>
-            <li><strong>dry/</strong>
-              <ul>
-                <li>heavy_vel60_clean/</li>
-                <li>heavy_vel60_noise/</li>
-                <li>...</li>
-              </ul>
-            </li>
-            <li><strong>lean/</strong></li>
-            <li><strong>loose/</strong></li>
-            <li><strong>screwdrop/</strong></li>
-          </ul>
-        </li>
-
-      </ul>
-    </li>
-  </ul>
-</div>
-    </section>
-
-<section id="Dataset-Examples" style="padding:60px 0;">
-  <div style="max-width:1100px;margin:0 auto;padding:0 16px;">
-
-    <h2 style="margin-top:0;">Dataset-Examples</h2>
-    <p style="max-width:900px;">
-      Each example corresponds to the same condition and the same sample index, shown across sensing modalities:
-      recorder, iOS device, Android device, and vibration sensors (4 channels).
-    </p>
-
-    <!-- ===================== NORMAL ===================== -->
-    <h3 style="margin-top:40px;">Normal</h3>
-
-    <div style="margin-top:18px;padding:18px;border:1px solid rgba(255,255,255,0.10);border-radius:14px;">
-      <div style="font-weight:500;margin-bottom:6px;">Condition: heavy_vel100_clean</div>
-
-      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(4, minmax(220px, 1fr));gap:14px;align-items:start;">
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Recorder</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel100_clean/heavy_vel100_clean_recorder.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">iOS device</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel100_clean/heavy_vel100_clean_ios.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Android device</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel100_clean/heavy_vel100_clean_android.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Vibration sensors (4 channels)</div>
-          <a href="assets/heavy_vel100_clean/heavy_vel100_clean_waveform.png" target="_blank" rel="noopener noreferrer">
-            <img
-              src="assets/heavy_vel100_clean/heavy_vel100_clean_waveform.png"
-              alt="Vibration waveform (4 channels) for heavy_vel100_clean"
-              style="width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.10);display:block;"
-            />
-          </a>
-          <div style="font-size:12px;opacity:0.70;margin-top:6px;">Click to view full resolution.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===================== ABNORMAL ===================== -->
-    <h3 style="margin-top:50px;">Abnormal</h3>
-
-    <p style="max-width:900px;opacity:0.85;margin-top:10px;">
-      Fault type notes: <span style="opacity:0.95;">loose</span> indicates that one of the two conveyor chains becomes excessively slack; 
-      <span style="opacity:0.95;">screwdrop</span> indicates that a small screw drops into the chain conveyor during operation.
-    </p>
-
-    <!-- ---- Fault type: loose ---- -->
-    <h4 style="margin-top:26px;opacity:0.95;">Fault type: loose</h4>
-
-    <div style="margin-top:12px;padding:18px;border:1px solid rgba(255,255,255,0.10);border-radius:14px;">
-      <div style="font-weight:500;margin-bottom:6px;">Condition: heavy_vel80_noise_loose</div>
-
-      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(4, minmax(220px, 1fr));gap:14px;align-items:start;">
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Recorder</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel80_noise_loose/heavy_vel80_noise_loose_recorder.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">iOS device</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel80_noise_loose/heavy_vel80_noise_loose_ios.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Android device</div>
-          <audio controls preload="none">
-            <source src="assets/heavy_vel80_noise_loose/heavy_vel80_noise_loose_android.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Vibration sensors (4 channels)</div>
-          <a href="assets/heavy_vel80_noise_loose/heavy_vel80_noise_loose_waveform.png" target="_blank" rel="noopener noreferrer">
-            <img
-              src="assets/heavy_vel80_noise_loose/heavy_vel80_noise_loose_waveform.png"
-              alt="Vibration waveform (4 channels) for heavy_vel80_noise_loose"
-              style="width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.10);display:block;"
-            />
-          </a>
-          <div style="font-size:12px;opacity:0.70;margin-top:6px;">Click to view full resolution.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---- Fault type: screwdrop ---- -->
-    <h4 style="margin-top:30px;opacity:0.95;">Fault type: screwdrop</h4>
-
-    <div style="margin-top:12px;padding:18px;border:1px solid rgba(255,255,255,0.10);border-radius:14px;">
-      <div style="font-weight:500;margin-bottom:6px;">Condition: light_vel60_clean_screwdrop</div>
-
-      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(4, minmax(220px, 1fr));gap:14px;align-items:start;">
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Recorder</div>
-          <audio controls preload="none">
-            <source src="assets/light_vel60_clean_screwdrop/light_vel60_clean_screwdrop_recorder.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">iOS device</div>
-          <audio controls preload="none">
-            <source src="assets/light_vel60_clean_screwdrop/light_vel60_clean_screwdrop_ios.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Android device</div>
-          <audio controls preload="none">
-            <source src="assets/light_vel60_clean_screwdrop/light_vel60_clean_screwdrop_android.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-
-        <div>
-          <div style="font-size:13px;margin:0 0 6px 0;opacity:0.9;">Vibration sensors (4 channels)</div>
-          <a href="assets/light_vel60_clean_screwdrop/light_vel60_clean_screwdrop_waveform.png" target="_blank" rel="noopener noreferrer">
-            <img
-              src="assets/light_vel60_clean_screwdrop/light_vel60_clean_screwdrop_waveform.png"
-              alt="Vibration waveform (4 channels) for light_vel60_clean_screwdrop"
-              style="width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.10);display:block;"
-            />
-          </a>
-          <div style="font-size:12px;opacity:0.70;margin-top:6px;">Click to view full resolution.</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <style>
-    #Dataset-examples audio {
-      width: 100%;
-      height: 40px;
-    }
-  </style>
-</section>
-
-<section id="benchmark">
-  <h2>Benchmark</h2>
-  <p class="muted">
-    We provide two benchmark tracks with task-specific condition-level splits and unified evaluation protocols.
-    All partitions are performed at the condition level. <p>The source code is available at:
-  <a href="https://github.com/Anonymous2417/SSCC-Fault-Benchmark">SSCC-Fault-Benchmark</a>.
-</p>
-  </p>
-
-<h3 style="margin:12px 0 6px; font-size:16px;">Fault Detection </h3>
-<p class="muted" style="margin:0 0 8px;">
-  The fault detection track follows a normal-only training paradigm. Models are trained exclusively
-  on normal samples collected under a designated target velocity (vel=100), including all load levels
-  (heavy, medium, light) and both clean and noise settings. No abnormal samples are included in training.
-  Testing is conducted on a mixed set containing (i) normal samples from the remaining velocities
-  (20, 40, 60, 80) and (ii) all abnormal samples across all velocities and load conditions.
-</p>
-
-<h3 style="margin:12px 0 6px; font-size:16px;">Fault Classification </h3>
-<p class="muted" style="margin:0 0 8px;">
-  The fault classification track is formulated as a supervised multi-class classification task.
-  All samples collected at velocity 80 are held out from training. Moreover, samples belonging to selected fault
-  categories (dry and lean) under velocity 100 are removed from the training set
-  and reassigned to the testing set.
-</p>
-</section>
-
-
-
-
-
-    <div class="hr"></div>
-    <div class="footer">
-      <div>© 2026 SSCC Dataset</div>
-      <div>
-        Built for GitHub Pages ·
-        <a href="https://pages.github.com/" target="_blank" rel="noopener">Docs</a>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+/* Responsive: stack to 2 columns then 1 column */
+@media (max-width: 980px){
+  .examples-grid{ grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+}
+@media (max-width: 560px){
+  .examples-grid{ grid-template-columns: 1fr; }
+}
